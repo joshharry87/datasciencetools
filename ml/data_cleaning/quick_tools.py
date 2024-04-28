@@ -17,7 +17,7 @@ def quick_clean(df):
     Takes a pandas dataframe and runs generic quick clean for EA purposes.
     Returns information on data removed and changes.
     '''
-    cols = dc.find_null_columns(df)
+    cols = df.columns
     
     nrows = df.shape[0]
     
