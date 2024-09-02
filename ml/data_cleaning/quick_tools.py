@@ -12,10 +12,11 @@ import data_cleaning as  dc
 
     
 
-def quick_clean(df):
+def quick_clean(df, cat_threshold=3):
     '''
     Takes a pandas dataframe and runs generic quick clean for EA purposes.
     Returns information on data removed and changes.
+    cat_threshold = 3 default, threshold for number of categories to auto one-hot encode
     '''
     cols = df.columns
     
@@ -30,7 +31,7 @@ def quick_clean(df):
             numeric.append(col)
         else:
             df = df[df[col] != np.nan | df[col] != None | df[col] != np.NaN]
-            if dc.check_categories_by_threshold(df, col, 3):
+            if dc.check_categories_by_threshold(df, col, cat_threshold):
                 dummies.append(col)
                 df = pd.get_dummies(df, columns=[col, ])
                 for cola in df.columns:
@@ -49,3 +50,4 @@ def quick_clean(df):
         "n_rows" : nrows,
         "dropped_rows" : dropped_rows
         })
+    
